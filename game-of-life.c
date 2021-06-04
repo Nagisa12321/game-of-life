@@ -1,18 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<unistd.h>
 
-void change(int** board, int len_i, int len_j);
-int countLife(int i, int j, int** board, int len_i, int len_j);
+void change(int board[][9], int len_i, int len_j);
+int countLife(int i, int j, int board[][9], int len_i, int len_j);
 int abs(int i);
 int** create_array(int len_i, int len_j);
-
 int main()
 {
     system("clear");
     int len_i = 9;
     int len_j = 9;
-    int** board = create_array(len_i, len_j);
-    int tmp[9][9] = {
+    int board[9][9] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 1, 1, 0, 0, 0, 0},
         {0, 0, 1, 0, 1, 0, 0, 0, 0},
@@ -24,12 +23,6 @@ int main()
         {0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
-    for (int i = 0; i < len_i; i++) {
-        for (int j = 0; j < len_j; j++) {
-            board[i][j] = tmp[i][j];
-        }
-    }
-
     while (1) {
         for (int i = 0; i < len_i; i++) {
             for (int j = 0; j < len_j; j++) {
@@ -37,15 +30,15 @@ int main()
             }
             printf("\n");
         }
-        change((int**)board, len_i, len_j);
+        change(board, len_i, len_j);
         sleep(1);
         system("clear");
     }
     return 0;
+
 }
 
-
-void change(int** board, int len_i, int len_j) {
+void change(int board[][9], int len_i, int len_j) {
     for (int i = 0; i < len_i; i++) {
         for (int j = 0; j < len_j; j++) {
             int count = countLife(i, j, board, len_i, len_j);
@@ -72,7 +65,7 @@ void change(int** board, int len_i, int len_j) {
     }
 }
 
-int countLife(int i, int j, int** board, int len_i, int len_j) {
+int countLife(int i, int j, int board[][9], int len_i, int len_j) {
     int num = 0;
     if (i - 1 >= 0 && j - 1 >= 0 && abs(board[i - 1][j - 1]) == 1) num++;
     if (i - 1 >= 0 && abs(board[i - 1][j]) == 1) num++;
